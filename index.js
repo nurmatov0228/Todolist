@@ -14,7 +14,13 @@ Edited.innerHTML = `<sub><i>   Edited</i></sub>`;
 Edited.classList.add("edit");
 
 // Todos
-let Todos = [];
+let Todos = JSON.parse(localStorage.getItem("list"))
+  ? localStorage.setItem("list", JSON.stringify(Todos))
+  : [];
+// setItem
+function setItem() {
+  localStorage.setItem("list", JSON.stringify(Todos));
+}
 
 // showmessage
 function showMessage(where, message) {
@@ -82,6 +88,7 @@ formCreate.addEventListener("submit", (e) => {
     showMessage("message-create", "Write some text...");
   }
 
+  setItem();
   getTodos();
   formCreate.reset();
 });
@@ -93,6 +100,7 @@ function deleteTodo(id) {
   });
 
   Todos = deleteTodos;
+  setItem();
   getTodos();
 }
 
@@ -112,6 +120,7 @@ formEdit.addEventListener("submit", (e) => {
   } else {
     showMessage("message-edit", "Write some text...");
   }
+  setItem();
   getTodos();
   formEdit.reset();
 });
@@ -144,6 +153,6 @@ function complatedTodo(id) {
     }
   });
   Todos = complatedTodos;
+  setItem();
   getTodos();
 }
-
